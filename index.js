@@ -6,7 +6,7 @@ const LichessStrategy = require('passport-lichess').Strategy;
 const LidraughtsStrategy = require('passport-lidraughts').Strategy;
 
 const port = process.env.PORT || 5000;
-const uri = process.env.URI || 'https://lichess-bot-upgrader.herokuapp.com'
+const uri = process.env.URI || 'https://bot-upgrader-61m0.onrender.com'
 
 passport.use(new LichessStrategy({
   clientID: process.env.LICHESS_CLIENT_ID,
