@@ -4,6 +4,7 @@ const fetch = require('node-fetch')
 const passport = require('passport');
 const LichessStrategy = require('passport-lichess').Strategy;
 const LidraughtsStrategy = require('passport-lidraughts').Strategy;
+const path = require('path');
 
 const port = process.env.PORT || 5000;
 const uri = process.env.URI || 'https://bot-upgrader-61m0.onrender.com'
@@ -55,12 +56,25 @@ app.get('/auth/lidraughts/callback',
     failureRedirect: '/draughts/fail'
   }));
 
-app.get('/', (_req, res) => res.send(`<a href='/auth/lichess'>Login with Lichess</a><br><br><a href='/auth/lidraughts'>Login with Lidraughts</a>`));
-app.get('/chess/bot', (req, res) => res.send(`Hello <a href='https://lichess.org/@/${req.user.username}'>${req.user.username}</a>! <br><br><a href='/chess/bot/upgrade'>Upgrade to a bot account</a> <b>(This is irreversible!)<b>`));
-app.get('/chess/fail', (_req, res) => res.send(`Authentication failed <br><br><a href='/auth/lichess'>Retry</a>`));
+app.get('/', function(_req, res) {
+  res.sendFile(path.join(__dirname, '/html/index.html'));
+});
 
-app.get('/draughts/bot', (req, res) => res.send(`Hello <a href='https://lidraughts.org/@/${req.user.username}'>${req.user.username}</a>! <br><br><a href='/draughts/bot/upgrade'>Upgrade to a bot account</a> <b>(This is irreversible!)<b>`));
-app.get('/draughts/fail', (_req, res) => res.send(`Authentication failed <br><br><a href='/draughts/auth/lichess'>Retry</a>`));
+app.get('/chess/bot', function(_req, res) {
+  res.sendFile(path.join(__dirname, '/html/success-c.html'));
+});
+
+app.get('/chess/bot', function(_req, res) {
+  res.sendFile(path.join(__dirname, '/html/fail-c.html'));
+});
+
+app.get('/draughts/bot', function(_req, res) {
+  res.sendFile(path.join(__dirname, '/html/success-d.html'));
+});
+
+app.get('/draughts/fail', function(_req, res) {
+  res.sendFile(path.join(__dirname, '/html/fail-d.html'));
+});
 
 app.get('/chess/bot/upgrade', (req, res) => {	
 	fetch('https://lichess.org/api/bot/account/upgrade', {
@@ -85,5 +99,5 @@ app.get('/draughts/bot/upgrade', (req, res) => {
 })
 
 app.listen(port, () => {
-	console.log(`Listening at port ${port}`)
+	console.log(`Listening at port ${port} \n\nOpen at http://localhost:${port}`)
 })
