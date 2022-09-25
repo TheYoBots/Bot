@@ -64,7 +64,7 @@ app.get('/chess/bot', function(_req, res) {
   res.sendFile(path.join(__dirname, '/html/success-c.html'));
 });
 
-app.get('/chess/bot', function(_req, res) {
+app.get('/chess/fail', function(_req, res) {
   res.sendFile(path.join(__dirname, '/html/fail-c.html'));
 });
 
